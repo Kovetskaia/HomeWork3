@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyLayout">
+        <attr name="ml_distance" format="dimension" />
+        <attr name="ml_my_height" format="dimension" />
+        <attr name="android:gravity" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.nastya.homework3.MyLayout
+        android:id="@+id/ml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#f0f0">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip0"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip0"
+            app:ml_my_height="100dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip1"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip1"
+            app:ml_distance="20dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip2"
+            app:ml_distance="20dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip3"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip3"
+            app:ml_distance="20dp" />
+
+    </com.example.nastya.homework3.MyLayout>
+
+    <com.example.nastya.homework3.MyLayout
+        android:id="@+id/ml1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#f00"
+        android:gravity="right">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip10"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip10"
+            app:ml_distance="20dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip11"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip11"
+            app:ml_distance="20dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip12"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip12"
+            app:ml_distance="20dp"
+            app:ml_my_height="100dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip13"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:chipText="@string/chip13"
+            app:ml_distance="50dp" />
+
+
+    </com.example.nastya.homework3.MyLayout>
+
+</LinearLayout>
