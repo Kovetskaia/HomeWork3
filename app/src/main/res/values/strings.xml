@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">HomeWork3</string>
     <string name="chip0">Широкий Chip 0</string>
-    <string name="chip1">Длинный Chip 1 </string>
+    <string name="chip1">Chip 1 с margin</string>
     <string name="chip2">Chip 2</string>
     <string name="chip3">Chip 3</string>
     <string name="chip10">Chip 5</string>
     <string name="chip11">Длинный Chip 6</string>
     <string name="chip12">Самый широкий Chip 7</string>
-    <string name="chip13">Chip 8 с дистанцией 50dp</string>
+    <string name="chip13">Chip 8</string>
 </resources>

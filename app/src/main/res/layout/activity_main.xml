@@ -9,7 +9,6 @@
         android:id="@+id/ml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="#f0f0">
 
         <com.google.android.material.chip.Chip
@@ -19,6 +18,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             app:chipText="@string/chip0"
+            app:ml_distance="20dp"
             app:ml_my_height="100dp" />
 
         <com.google.android.material.chip.Chip
@@ -26,6 +26,10 @@
             style="@style/Widget.MaterialComponents.Chip.Entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
             android:clickable="false"
             app:chipText="@string/chip1"
             app:ml_distance="20dp" />
@@ -54,7 +58,6 @@
         android:id="@+id/ml1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="#f00"
         android:gravity="right">
 
@@ -93,7 +96,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             app:chipText="@string/chip13"
-            app:ml_distance="50dp" />
+            app:ml_distance="20dp" />
 
 
     </com.example.nastya.homework3.MyLayout>

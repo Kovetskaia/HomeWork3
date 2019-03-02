@@ -62,6 +62,9 @@ public class MyLayout extends ViewGroup {
         int distance = 0;
         int height = 0;
         int count = getChildCount();
+        int totalLeftRightMargin = 0;
+        int totalTopBottomMargin = 0;
+        int totalDistance = 0;
 
 
         for (int i = 0; i < count; i++) {
@@ -69,50 +72,73 @@ public class MyLayout extends ViewGroup {
             LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
             distance = layoutParams.distance;
             height = layoutParams.myHeight;
+            totalLeftRightMargin += layoutParams.leftMargin + layoutParams.rightMargin;
+            totalTopBottomMargin += layoutParams.topMargin + layoutParams.bottomMargin;
+            totalDistance += layoutParams.distance;
 
             if (child.getVisibility() != GONE) {
                 measureChild(child, widthMeasureSpec, heightMeasureSpec);
-                currentMaxWidth += child.getMeasuredWidth() + distance;
-                totalWidth = Math.max(totalWidth, child.getMeasuredWidth() + distance);
+                currentMaxWidth += child.getMeasuredWidth()
+                        + distance
+                        + layoutParams.leftMargin
+                        + layoutParams.rightMargin;
+                totalWidth = Math.max(totalWidth,
+                        child.getMeasuredWidth()
+                                + distance
+                                + layoutParams.leftMargin
+                                + layoutParams.rightMargin);
 
                 if ((currentMaxWidth / deviceWidth) >= 1) {
                     currentRowTop = totalHeight;
-                    currentMaxHeight = height + upperDistance;
-                    currentMaxWidth = child.getMeasuredWidth() + distance;
+                    currentMaxHeight = height
+                            + upperDistance
+                            + layoutParams.topMargin
+                            + layoutParams.bottomMargin;
+                    currentMaxWidth = child.getMeasuredWidth()
+                            + distance
+                            + layoutParams.leftMargin
+                            + layoutParams.rightMargin;
                     countRow++;
                 } else {
                     totalWidth = Math.max(totalWidth, (int) currentMaxWidth);
-                    currentMaxHeight = Math.max(currentMaxHeight, height + upperDistance);
+                    currentMaxHeight = Math.max(currentMaxHeight, height
+                            + upperDistance
+                            + layoutParams.topMargin
+                            + layoutParams.bottomMargin);
                 }
                 totalHeight = Math.max(currentRowTop + currentMaxHeight, totalHeight);
             }
-            child.measure(MeasureSpec.makeMeasureSpec(child.getMeasuredWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+            child.measure(MeasureSpec.makeMeasureSpec(child.getMeasuredWidth(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
         }
         if ((heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) & totalHeight > heightSize) {
-            int limitHeight = (int) (heightSize - upperDistance * countRow) / countRow;
+            int limitHeight = (int) (heightSize - totalTopBottomMargin - upperDistance * countRow) / countRow;
             if ((widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) & totalWidth > widthSize) {
                 int averageCount = count / countRow;
-                int limitWidth = (int) (widthSize - distance * averageCount) / averageCount;
+                int limitWidth = (int) (widthSize - totalDistance - totalLeftRightMargin) / averageCount;
                 for (int i = 0; i < count; i++) {
                     final View child = getChildAt(i);
-                    child.measure(MeasureSpec.makeMeasureSpec(limitWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(limitHeight, MeasureSpec.AT_MOST));
+                    child.measure(MeasureSpec.makeMeasureSpec(limitWidth, MeasureSpec.AT_MOST),
+                            MeasureSpec.makeMeasureSpec(limitHeight, MeasureSpec.AT_MOST));
                 }
                 totalWidth = widthSize;
                 totalHeight = heightSize;
             } else {
                 for (int i = 0; i < count; i++) {
                     final View child = getChildAt(i);
-                    child.measure(MeasureSpec.makeMeasureSpec(child.getMeasuredWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(limitHeight, MeasureSpec.AT_MOST));
+                    child.measure(MeasureSpec.makeMeasureSpec(child.getMeasuredWidth(), MeasureSpec.EXACTLY),
+                            MeasureSpec.makeMeasureSpec(limitHeight, MeasureSpec.AT_MOST));
                 }
                 totalHeight = heightSize;
             }
 
         } else if ((widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) & totalWidth > widthSize) {
 
-            int limitWidth = (int) (widthSize - distance * count) / (count / countRow);
+            int limitWidth = (int) (widthSize - totalDistance - totalLeftRightMargin) / (count / countRow);
             for (int i = 0; i < count; i++) {
                 final View child = getChildAt(i);
-                child.measure(MeasureSpec.makeMeasureSpec(limitWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(child.getMeasuredHeight(), MeasureSpec.AT_MOST));
+                child.measure(MeasureSpec.makeMeasureSpec(limitWidth, MeasureSpec.AT_MOST),
+                        MeasureSpec.makeMeasureSpec(child.getMeasuredHeight(), MeasureSpec.EXACTLY));
             }
             totalWidth = widthSize;
         }
@@ -133,38 +159,42 @@ public class MyLayout extends ViewGroup {
         int currentTop = topPosition + upperDistance;
         int maxHeight = 0;
         int distance = 0;
+        //  int margin = 0;
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
             distance = layoutParams.distance;
-
             if (child.getVisibility() != GONE) {
                 currentWidth = child.getMeasuredWidth() + distance;
-                currentHeight = child.getMeasuredHeight();
+                currentHeight = child.getMeasuredHeight() + layoutParams.topMargin;
                 if (position == Gravity.RIGHT) {
-                    if ((currentRight - currentWidth) < leftPosition) {
+                    currentWidth += layoutParams.rightMargin;
+                    if ((currentRight - currentWidth - layoutParams.leftMargin) < leftPosition) {
                         currentRight = rightPosition;
                         currentTop += maxHeight + upperDistance;
                         maxHeight = 0;
                     }
                     child.layout(currentRight - currentWidth,
-                            currentTop,
-                            currentRight - distance,
+                            currentTop + layoutParams.topMargin,
+                            currentRight - distance - layoutParams.rightMargin,
                             currentTop + currentHeight);
 
-                    maxHeight = Math.max(maxHeight, currentHeight);
-                    currentRight -= currentWidth;
+                    maxHeight = Math.max(maxHeight, currentHeight + layoutParams.bottomMargin);
+                    currentRight -= currentWidth + layoutParams.leftMargin;
                 } else {
-                    if (currentLeft + currentWidth > rightPosition) {
+                    currentWidth += layoutParams.leftMargin;
+                    if (currentLeft + currentWidth + layoutParams.rightMargin > rightPosition) {
                         currentLeft = leftPosition;
                         currentTop += maxHeight + upperDistance;
                         maxHeight = 0;
                     }
-                    child.layout(currentLeft + distance, currentTop, currentLeft + currentWidth, currentTop + currentHeight);
-                    if (maxHeight < currentHeight)
-                        maxHeight = currentHeight;
-                    currentLeft += currentWidth;
+                    child.layout(currentLeft + distance + layoutParams.leftMargin,
+                            currentTop + layoutParams.topMargin,
+                            currentLeft + currentWidth,
+                            currentTop + currentHeight);
+                    maxHeight = Math.max(maxHeight, currentHeight + layoutParams.bottomMargin);
+                    currentLeft += currentWidth + layoutParams.rightMargin;
                 }
             }
         }
